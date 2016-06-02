@@ -2,12 +2,19 @@ $(document).foundation()
 
 var megaRoster = {
   init: function() {
-    document.querySelector('form').onsubmit = this.addStudent;
+    this.setupEventListeners();
+    this.count = 0;
+  },
+
+  setupEventListeners: function() {
+    document.querySelector('form').onsubmit = this.addStudent.bind(this);
   },
 
   addStudent: function(ev) {
     ev.preventDefault();
-    var studentName = this.studentName.value;
+    var f = ev.currentTarget;
+    var studentName = f.studentName.value;
+    this.count += 1;
     console.log(studentName);
   }
 };
