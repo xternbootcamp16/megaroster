@@ -14,8 +14,17 @@ var megaRoster = {
     ev.preventDefault();
     var f = ev.currentTarget;
     var studentName = f.studentName.value;
+    var listItem = this.buildListItem(studentName);
+    var studentList = document.querySelector('#studentList');
+    studentList.appendChild(listItem);
+
     this.count += 1;
-    console.log(studentName);
-  }
+  },
+
+  buildListItem: function(studentName) {
+    var listItem = document.createElement('li');
+    listItem.innerText = studentName;
+    return listItem;
+  },
 };
 megaRoster.init();
