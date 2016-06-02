@@ -17,7 +17,7 @@ var megaRoster = {
     var listItem = this.buildListItem(studentName);
     var studentList = document.querySelector('#studentList');
     studentList.appendChild(listItem);
-
+    f.reset();
     this.count += 1;
   },
 
