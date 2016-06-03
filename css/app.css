@@ -5,3 +5,8 @@
 #studentList a {
   margin-left: 1em;
 }
+
+span.actions {
+  display: inline-block;
+  float: right;
+}

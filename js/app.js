@@ -39,6 +39,8 @@ var megaRoster = {
   },
 
   appendLinks: function(listItem) {
+    var span = document.createElement('span');
+    span.className += 'actions'
     var removeLink = this.buildLink({
       text: 'remove',
       handler: function() {
@@ -51,8 +53,9 @@ var megaRoster = {
         listItem.style.border = '2px CornflowerBlue dashed';
       }
     });
-    listItem.appendChild(removeLink);
-    listItem.appendChild(promoteLink);
+    span.appendChild(removeLink);
+    span.appendChild(promoteLink);
+    listItem.appendChild(span);
   },
 
   buildLink: function(options) {
