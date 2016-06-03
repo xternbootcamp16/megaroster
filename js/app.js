@@ -85,12 +85,16 @@ var megaRoster = {
   },
 
   moveUp: function(listItem) {
-    var previousItem = listItem.previousElementSibling;
-    this.studentList.insertBefore(listItem, previousItem);
+    if (listItem !== this.studentList.firstElementChild) {
+      var previousItem = listItem.previousElementSibling;
+      this.studentList.insertBefore(listItem, previousItem);
+    }
   },
 
   moveDown: function(listItem) {
-    this.moveUp(listItem.nextElementSibling);
+    if (listItem !== this.studentList.lastElementChild) {
+      this.moveUp(listItem.nextElementSibling);
+    }
   },
 };
 megaRoster.init('#studentList');
