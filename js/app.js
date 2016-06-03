@@ -50,8 +50,8 @@ var megaRoster = {
     var promoteLink = this.buildLink({
       text: 'promote',
       handler: function() {
-        listItem.style.border = '2px CornflowerBlue dashed';
-      }
+        this.promote(listItem);
+      }.bind(this)
     });
     span.appendChild(removeLink);
     span.appendChild(promoteLink);
@@ -64,6 +64,10 @@ var megaRoster = {
     link.innerText = options.text;
     link.onclick = options.handler;
     return link;
+  },
+
+  promote: function(listItem) {
+    this.prependChild(this.studentList, listItem);
   },
 };
 megaRoster.init('#studentList');
