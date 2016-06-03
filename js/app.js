@@ -53,8 +53,22 @@ var megaRoster = {
         this.promote(listItem);
       }.bind(this)
     });
+    var moveUpLink = this.buildLink({
+      text: 'up',
+      handler: function() {
+        this.moveUp(listItem);
+      }.bind(this)
+    });
+    var moveDownLink = this.buildLink({
+      text: 'down',
+      handler: function() {
+        this.moveDown(listItem);
+      }.bind(this)
+    });
     span.appendChild(removeLink);
     span.appendChild(promoteLink);
+    span.appendChild(moveUpLink);
+    span.appendChild(moveDownLink);
     listItem.appendChild(span);
   },
 
@@ -68,6 +82,15 @@ var megaRoster = {
 
   promote: function(listItem) {
     this.prependChild(this.studentList, listItem);
+  },
+
+  moveUp: function(listItem) {
+    var previousItem = listItem.previousElementSibling;
+    this.studentList.insertBefore(listItem, previousItem);
+  },
+
+  moveDown: function(listItem) {
+    this.moveUp(listItem.nextElementSibling);
   },
 };
 megaRoster.init('#studentList');
