@@ -32,6 +32,13 @@ var megaRoster = {
 
   buildListItem: function(studentName) {
     var listItem = document.createElement('li');
+    listItem.innerText = studentName;
+    this.appendLinks(listItem);
+
+    return listItem;
+  },
+
+  appendLinks: function(listItem) {
     var removeLink = this.buildLink({
       text: 'remove',
       handler: function() {
@@ -44,11 +51,8 @@ var megaRoster = {
         listItem.style.border = '2px CornflowerBlue dashed';
       }
     });
-    listItem.innerText = studentName;
     listItem.appendChild(removeLink);
     listItem.appendChild(promoteLink);
-
-    return listItem;
   },
 
   buildLink: function(options) {
