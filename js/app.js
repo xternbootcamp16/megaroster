@@ -9,8 +9,8 @@ var megaRoster = {
   },
 
   setupTemplates: function() {
-    this.listItemTemplate = this.studentList.querySelector('li.template');
-    this.listItemTemplate.remove();
+    this.studentItemTemplate = this.studentList.querySelector('.student.template');
+    this.studentItemTemplate.remove();
 
     this.formGroupTemplate = document.querySelector('.input-group.template');
     this.formGroupTemplate.remove();
@@ -40,7 +40,7 @@ var megaRoster = {
   },
 
   buildListItem: function(studentName) {
-    var listItem = this.listItemTemplate.cloneNode(true);
+    var listItem = this.studentItemTemplate.cloneNode(true);
     listItem.querySelector('.student-name').innerText = studentName;
     listItem.className = listItem.className.replace('hide', '').trim();
     this.activateLinks(listItem);
