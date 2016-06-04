@@ -2,12 +2,33 @@
   padding: 0;
 }
 
-#student_list > li:first-child a.move-up,
-#student_list > li:last-child a.move-down {
+.actions {
+  float: right;
+  transition: 0.3s;
+  opacity: 0;
+  margin-bottom: 0;
+}
+
+.student {
+  border: 1px solid #ddd;
+  height: 4rem;
+  padding: .75rem 1.25rem;
+  margin-bottom: -1px;
+}
+.student:first-child a.move-up,
+.student:last-child a.move-down {
   background-color: #ddd;
   color: #eee;
   cursor: not-allowed;
   /*pointer-events: none;*/
+}
+
+.student:hover .actions {
+  opacity: 1;
+}
+
+.student .input-group {
+  margin-bottom: 0;
 }
 
 span.student-name {
@@ -19,8 +40,4 @@ span[contenteditable=true] {
   border: 1px solid #ccc;
   line-height: inherit;
   padding: 0;
-}
-
-.actions {
-  float: right;
 }
