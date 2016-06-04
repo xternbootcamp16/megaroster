@@ -3,6 +3,8 @@ $(document).foundation()
 var megaRoster = {
   init: function(listSelector) {
     this.studentList = document.querySelector(listSelector);
+    this.listItemTemplate = this.studentList.querySelector('li.template');
+    this.listItemTemplate.remove();
     this.setupEventListeners();
     this.count = 0;
   },
@@ -31,56 +33,30 @@ var megaRoster = {
   },
 
   buildListItem: function(studentName) {
-    var listItem = document.createElement('li');
-    var span = document.createElement('span');
-    listItem.className += 'clearfix';
-    span.innerText = studentName;
-    span.className = 'student-name';
-    listItem.appendChild(span);
-    this.appendLinks(listItem);
+    var listItem = this.listItemTemplate.cloneNode(true);
+    listItem.querySelector('.student-name').innerText = studentName;
+    listItem.className = listItem.className.replace('hide', '').trim();
+    this.activateLinks(listItem);
 
     return listItem;
   },
 
-  appendLinks: function(listItem) {
-    var div = document.createElement('div');
-    div.className += 'actions expanded button-group'
-    div.appendChild(this.buildLink({
-      contents: '<i class="fa fa-pencil">',
-      className: 'edit button',
-      handler: function() {
-        this.toggleEditable(listItem.querySelector('span.student-name'));
-      }.bind(this)
-    }));
-    div.appendChild(this.buildLink({
-      contents: '<i class="fa fa-star"></i>',
-      className: 'promote warning button',
-      handler: function() {
-        this.promote(listItem);
-      }.bind(this)
-    }));
-    div.appendChild(this.buildLink({
-      contents: '<i class="fa fa-arrow-up"></i>',
-      className: 'move-up button',
-      handler: function() {
-        this.moveUp(listItem);
-      }.bind(this)
-    }));
-    div.appendChild(this.buildLink({
-      contents: '<i class="fa fa-arrow-down"></i>',
-      className: 'move-down button',
-      handler: function() {
-        this.moveDown(listItem);
-      }.bind(this)
-    }));
-    div.appendChild(this.buildLink({
-      contents: '<i class="fa fa-trash-o"></i>',
-      className: 'remove alert button',
-      handler: function() {
-        listItem.remove();
-      }
-    }));
-    listItem.appendChild(div);
+  activateLinks: function(listItem) {
+    listItem.querySelector('a.edit').onclick = function() {
+      this.toggleEditable(listItem.querySelector('span.student-name'));
+    }.bind(this);
+    listItem.querySelector('a.promote').onclick = function() {
+      this.promote(listItem);
+    }.bind(this);
+    listItem.querySelector('a.move-up').onclick = function() {
+      this.moveUp(listItem);
+    }.bind(this);
+    listItem.querySelector('a.move-down').onclick = function() {
+      this.moveDown(listItem);
+    }.bind(this);
+    listItem.querySelector('a.remove').onclick = function() {
+      listItem.remove();
+    }.bind(this);
   },
 
   buildLink: function(options) {
