@@ -2,13 +2,10 @@
   padding: 0;
 }
 
-#studentList a {
-  margin-left: 1em;
-}
-
-#studentList li:first-child a.moveUp,
-#studentList li:last-child a.moveDown {
-  color: #ddd;
+#studentList > li:first-child a.moveUp,
+#studentList > li:last-child a.moveDown {
+  background-color: #ddd;
+  color: #eee;
   cursor: not-allowed;
   /*pointer-events: none;*/
 }
@@ -24,7 +21,6 @@ span[contenteditable=true] {
   padding: 0;
 }
 
-span.actions {
-  display: inline-block;
+.actions {
   float: right;
 }

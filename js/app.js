@@ -33,6 +33,7 @@ var megaRoster = {
   buildListItem: function(studentName) {
     var listItem = document.createElement('li');
     var span = document.createElement('span');
+    listItem.className += 'clearfix';
     span.innerText = studentName;
     span.className = 'studentName';
     listItem.appendChild(span);
@@ -42,47 +43,44 @@ var megaRoster = {
   },
 
   appendLinks: function(listItem) {
-    var span = document.createElement('span');
-    span.className += 'actions'
-    var removeLink = this.buildLink({
-      contents: 'remove',
-      className: 'alert button',
-      handler: function() {
-        listItem.remove();
-      }
-    });
-    var promoteLink = this.buildLink({
-      contents: 'promote',
-      handler: function() {
-        this.promote(listItem);
-      }.bind(this)
-    });
-    var moveUpLink = this.buildLink({
-      contents: '<i class="fa fa-arrow-up"></i>',
-      className: 'moveUp',
-      handler: function() {
-        this.moveUp(listItem);
-      }.bind(this)
-    });
-    var moveDownLink = this.buildLink({
-      contents: 'down',
-      className: 'moveDown',
-      handler: function() {
-        this.moveDown(listItem);
-      }.bind(this)
-    });
-    span.appendChild(this.buildLink({
-      contents: 'edit',
-      className: 'edit',
+    var div = document.createElement('div');
+    div.className += 'actions expanded button-group'
+    div.appendChild(this.buildLink({
+      contents: '<i class="fa fa-pencil">',
+      className: 'edit button',
       handler: function() {
         this.toggleEditable(listItem.querySelector('span.studentName'));
       }.bind(this)
     }));
-    span.appendChild(removeLink);
-    span.appendChild(promoteLink);
-    span.appendChild(moveUpLink);
-    span.appendChild(moveDownLink);
-    listItem.appendChild(span);
+    div.appendChild(this.buildLink({
+      contents: '<i class="fa fa-star"></i>',
+      className: 'promote warning button',
+      handler: function() {
+        this.promote(listItem);
+      }.bind(this)
+    }));
+    div.appendChild(this.buildLink({
+      contents: '<i class="fa fa-arrow-up"></i>',
+      className: 'moveUp button',
+      handler: function() {
+        this.moveUp(listItem);
+      }.bind(this)
+    }));
+    div.appendChild(this.buildLink({
+      contents: '<i class="fa fa-arrow-down"></i>',
+      className: 'moveDown button',
+      handler: function() {
+        this.moveDown(listItem);
+      }.bind(this)
+    }));
+    div.appendChild(this.buildLink({
+      contents: '<i class="fa fa-trash-o"></i>',
+      className: 'remove alert button',
+      handler: function() {
+        listItem.remove();
+      }
+    }));
+    listItem.appendChild(div);
   },
 
   buildLink: function(options) {
@@ -98,12 +96,14 @@ var megaRoster = {
     var toggleElement = el.parentElement.querySelector('a.edit');
     if (el.contentEditable === 'true') {
       el.contentEditable = 'false';
-      toggleElement.innerHTML = 'edit';
+      toggleElement.className = toggleElement.className.replace('success', '').trim();
+      toggleElement.innerHTML = '<i class="fa fa-pencil"></i>';
     }
     else {
       el.contentEditable = 'true';
       el.focus();
-      toggleElement.innerHTML = 'save';
+      toggleElement.className += ' success'
+      toggleElement.innerHTML = '<i class="fa fa-check"></i>';
     }
   },
 
