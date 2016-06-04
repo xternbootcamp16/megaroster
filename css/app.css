@@ -1,16 +1,16 @@
-#studentForm > div {
+#student_form > div {
   padding: 0;
 }
 
-#studentList > li:first-child a.moveUp,
-#studentList > li:last-child a.moveDown {
+#student_list > li:first-child a.move-up,
+#student_list > li:last-child a.move-down {
   background-color: #ddd;
   color: #eee;
   cursor: not-allowed;
   /*pointer-events: none;*/
 }
 
-span.studentName {
+span.student-name {
   display: inline-block;
   padding: 1px;
   width: 15em;

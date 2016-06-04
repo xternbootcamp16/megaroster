@@ -8,7 +8,7 @@ var megaRoster = {
   },
 
   setupEventListeners: function() {
-    document.querySelector('form#studentForm').onsubmit = this.addStudent.bind(this);
+    document.querySelector('form#student_form').onsubmit = this.addStudent.bind(this);
   },
 
   addStudent: function(ev) {
@@ -35,7 +35,7 @@ var megaRoster = {
     var span = document.createElement('span');
     listItem.className += 'clearfix';
     span.innerText = studentName;
-    span.className = 'studentName';
+    span.className = 'student-name';
     listItem.appendChild(span);
     this.appendLinks(listItem);
 
@@ -49,7 +49,7 @@ var megaRoster = {
       contents: '<i class="fa fa-pencil">',
       className: 'edit button',
       handler: function() {
-        this.toggleEditable(listItem.querySelector('span.studentName'));
+        this.toggleEditable(listItem.querySelector('span.student-name'));
       }.bind(this)
     }));
     div.appendChild(this.buildLink({
@@ -61,14 +61,14 @@ var megaRoster = {
     }));
     div.appendChild(this.buildLink({
       contents: '<i class="fa fa-arrow-up"></i>',
-      className: 'moveUp button',
+      className: 'move-up button',
       handler: function() {
         this.moveUp(listItem);
       }.bind(this)
     }));
     div.appendChild(this.buildLink({
       contents: '<i class="fa fa-arrow-down"></i>',
-      className: 'moveDown button',
+      className: 'move-down button',
       handler: function() {
         this.moveDown(listItem);
       }.bind(this)
@@ -124,4 +124,4 @@ var megaRoster = {
     }
   },
 };
-megaRoster.init('#studentList');
+megaRoster.init('#student_list');
