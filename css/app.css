@@ -11,13 +11,13 @@
 }
 
 span.student-name {
-  display: inline-block;
+  line-height: 38px;
   padding: 1px;
-  width: 15em;
 }
 
 span[contenteditable=true] {
   border: 1px solid #ccc;
+  line-height: inherit;
   padding: 0;
 }
 

@@ -3,10 +3,17 @@ $(document).foundation()
 var megaRoster = {
   init: function(listSelector) {
     this.studentList = document.querySelector(listSelector);
-    this.listItemTemplate = this.studentList.querySelector('li.template');
-    this.listItemTemplate.remove();
+    this.setupTemplates();
     this.setupEventListeners();
     this.count = 0;
+  },
+
+  setupTemplates: function() {
+    this.listItemTemplate = this.studentList.querySelector('li.template');
+    this.listItemTemplate.remove();
+
+    this.formGroupTemplate = document.querySelector('.input-group.template');
+    this.formGroupTemplate.remove();
   },
 
   setupEventListeners: function() {
@@ -43,7 +50,7 @@ var megaRoster = {
 
   activateLinks: function(listItem) {
     listItem.querySelector('a.edit').onclick = function() {
-      this.toggleEditable(listItem.querySelector('span.student-name'));
+      this.toggleEditable(listItem);
     }.bind(this);
     listItem.querySelector('a.promote').onclick = function() {
       this.promote(listItem);
@@ -59,27 +66,31 @@ var megaRoster = {
     }.bind(this);
   },
 
-  buildLink: function(options) {
-    var link = document.createElement('a');
-    link.href = "#";
-    link.innerHTML = options.contents;
-    link.onclick = options.handler;
-    link.className += (options.className || '');
-    return link;
-  },
-
-  toggleEditable: function(el) {
-    var toggleElement = el.parentElement.querySelector('a.edit');
-    if (el.contentEditable === 'true') {
+  toggleEditable: function(listItem) {
+    var el = listItem.querySelector('.editable');
+    var actions = listItem.querySelector('.actions');
+    var group, saveButton;
+    if (el.isContentEditable) {
+      group = listItem.querySelector('.input-group');
+      group.remove();
+      el.className = el.className.replace('input-group-field', '').trim();
+      this.prependChild(listItem, el);
       el.contentEditable = 'false';
-      toggleElement.className = toggleElement.className.replace('success', '').trim();
-      toggleElement.innerHTML = '<i class="fa fa-pencil"></i>';
+      actions.className = actions.className.replace('hide', '').trim();
     }
     else {
+      group = this.formGroupTemplate.cloneNode(true);
+      saveButton = group.querySelector('.button.success');
+      saveButton.onclick = function() {
+        this.toggleEditable(listItem);
+      }.bind(this);
+      actions.className += ' hide';
+      el.className += ' input-group-field';
+      this.prependChild(group, el);
+      listItem.appendChild(group);
+      group.className = group.className.replace('hide', '').trim();
       el.contentEditable = 'true';
       el.focus();
-      toggleElement.className += ' success'
-      toggleElement.innerHTML = '<i class="fa fa-check"></i>';
     }
   },
 
