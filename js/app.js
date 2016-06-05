@@ -12,16 +12,18 @@ var megaRoster = {
   },
 
   setupList: function(selector) {
-    this.studentList = document.querySelector(selector);
+    this.studentList = $(selector);
   },
 
   load: function() {
     try {
       var storedRoster = localStorage.getItem('roster');
       if (storedRoster) {
-        JSON.parse(storedRoster).map(function(student) {
-          this.addStudent(student, true);
-        }.bind(this));
+        this.studentList
+          .html(storedRoster)
+          .find('.student').each(function(index, el) {
+            this.incrementCounter($(el).data('id'));
+          }.bind(this));
       }
     }
     catch(err) {
@@ -31,7 +33,7 @@ var megaRoster = {
 
   save: function() {
     try {
-      localStorage.setItem('roster', JSON.stringify(this.students));
+      localStorage.setItem('roster', this.studentList.html());
     }
     catch(err) {
       return false;
@@ -39,13 +41,21 @@ var megaRoster = {
   },
 
   setupTemplates: function() {
-    this.studentItemTemplate = this.studentList.querySelector('.student.template');
-    this.removeClassName(this.studentItemTemplate, 'template');
-    this.studentItemTemplate.remove();
+    this.studentItemTemplate = $('.student.template')
+      .removeClass('template')
+      .detach();
   },
 
   setupEventListeners: function() {
-    document.querySelector('form#student_form').onsubmit = this.addStudentViaForm.bind(this);
+    var doc = $(document);
+    $('form#student_form').on('submit', this.addStudentViaForm.bind(this));
+    doc.on('click', '.student .edit', this.toggleEditable.bind(this));
+    doc.on('click', '.student .promote', this.promote.bind(this));
+    doc.on('click', '.student .move-up', this.moveUp.bind(this));
+    doc.on('click', '.student .move-down', this.moveDown.bind(this));
+    doc.on('click', '.student .remove', this.removeStudent.bind(this));
+    doc.on('click', '.student .cancel', this.toggleEditable.bind(this));
+    doc.on('submit', '.student form', this.saveStudent.bind(this));
   },
 
   addStudentViaForm: function(ev) {
@@ -59,18 +69,10 @@ var megaRoster = {
     f.studentName.focus();
   },
 
-  addStudent: function(student, addToEnd) {
+  addStudent: function(student) {
     var listItem = this.buildListItem(student);
-
-    if (addToEnd) {
-      this.students.push(student);
-      this.studentList.appendChild(listItem);
-    }
-    else {
-      this.students.unshift(student);
-      this.prependChild(this.studentList, listItem);
-    }
     this.incrementCounter(student.id);
+    this.studentList.prepend(listItem);
     this.save();
   },
 
@@ -80,128 +82,79 @@ var megaRoster = {
     }
   },
 
-  prependChild: function(parent, child) {
-    parent.insertBefore(child, parent.firstChild)
-  },
-
   buildListItem: function(student) {
-    var listItem = this.studentItemTemplate.cloneNode(true);
-    listItem.querySelector('.student-name').innerText = student.name;
-    listItem.setAttribute('data-id', student.id);
+    var listItem = this.studentItemTemplate.clone();
     if(student.promoted) {
-      this.promote(listItem);
+      listItem.addClass('promoted');
     }
-    this.removeClassName(listItem, 'hide');
-    this.activateLinks(listItem);
-
-    return listItem;
+    listItem.find('.student-name').text(student.name)
+    return listItem.attr('data-id', student.id).removeClass('hide');
   },
 
-  activateLinks: function(listItem) {
-    listItem.querySelector('a.edit').onclick = this.toggleEditable.bind(this, listItem);
-    listItem.querySelector('a.promote').onclick = this.promote.bind(this, listItem);
-    listItem.querySelector('a.move-up').onclick = this.moveUp.bind(this, listItem);
-    listItem.querySelector('a.move-down').onclick = this.moveDown.bind(this, listItem);
-    listItem.querySelector('a.remove').onclick = this.removeStudent.bind(this, listItem);
-
-    listItem.querySelector('form').onsubmit = this.saveStudent.bind(this, listItem);
-    listItem.querySelector('button.cancel').onclick = this.toggleEditable.bind(this, listItem);
-  },
-
-  findStudentFromItem: function(item) {
-    var student;
-    this.students.map(function(s) {
-      if (s.id == item.getAttribute('data-id')) {
-        student = s;
-      }
-    });
-    return student;
-  },
-
-  removeStudent: function(listItem, ev) {
-    if (ev) { ev.preventDefault(); }
-    var id = listItem.getAttribute('data-id');
-    this.students = this.students.filter(function(student) {
-      return student.id != id;
-    });
+  removeStudent: function(ev) {
+    ev.preventDefault();
+    var listItem = $(ev.currentTarget).closest('.student');
     listItem.remove();
     this.save();
   },
 
-  saveStudent: function(listItem, ev) {
-    if (ev) { ev.preventDefault(); }
-    var studentName = listItem.querySelector('form').studentName.value;
-    this.findStudentFromItem(listItem).name = studentName;
-    this.toggleEditable(listItem);
-    listItem.querySelector('.editable').innerText = studentName;
+  saveStudent: function(ev) {
+    ev.preventDefault();
+    var listItem = $(ev.currentTarget).closest('.student');
+    var studentName = listItem.find(':text').val();
+    this.toggleEditable(ev);
+    listItem.find('.editable').text(studentName);
     this.save();
   },
 
-  toggleEditable: function(listItem, ev) {
-    if (ev) { ev.preventDefault(); }
-    var el = listItem.querySelector('.editable');
-    var actions = listItem.querySelector('.actions');
-    var editForm = listItem.querySelector('form');
-    if (editForm.className.indexOf('hide') >= 0) {
-      editForm.studentName.value = el.innerText;
-      this.addClassName(el, 'hide');
-      this.addClassName(actions, 'hide');
-      this.removeClassName(editForm, 'hide');
-      editForm.studentName.focus();
-      editForm.studentName.select();
+  toggleEditable: function(ev) {
+    ev.preventDefault();
+    var listItem = $(ev.currentTarget).closest('.student');
+    var el = listItem.find('.editable');
+    var editForm = listItem.find('form');
+    var input = editForm.find(':text').eq(0);
+    if (editForm.hasClass('hide')) {
+      el.addClass('hide');
+      listItem.find('.actions').addClass('hide');
+      editForm.removeClass('hide');
+      input.val(el.text()).focus().select();
     }
     else {
-      this.addClassName(editForm, 'hide')
-      this.removeClassName(el, 'hide');
-      this.removeClassName(actions, 'hide');
+      editForm.addClass('hide')
+      el.removeClass('hide');
+      listItem.find('.actions').removeClass('hide');
     }
   },
 
-  promote: function(listItem, ev) {
-    if (ev) { ev.preventDefault(); }
-    var student = this.findStudentFromItem(listItem);
-    if (student) {
-      student.promoted = !student.promoted;
-    };
-    this.toggleClassName(listItem, 'promoted');
+  promote: function(ev) {
+    ev.preventDefault();
+    var listItem = $(ev.currentTarget).closest('.student');
+    listItem.toggleClass('promoted');
     this.save();
   },
 
-  moveUp: function(listItem, ev) {
-    if (ev) { ev.preventDefault(); }
-    var student = this.findStudentFromItem(listItem);
-    var oldIndex = this.students.indexOf(student);
-    this.students.splice(oldIndex - 1, 0, this.students.splice(oldIndex, 1)[0]);
-    if (listItem !== this.studentList.firstElementChild) {
-      var previousItem = listItem.previousElementSibling;
-      this.studentList.insertBefore(listItem, previousItem);
-    }
-    this.save();
-  },
-
-  moveDown: function(listItem, ev) {
-    if (ev) { ev.preventDefault(); }
-    if (listItem !== this.studentList.lastElementChild) {
-      this.moveUp(listItem.nextElementSibling);
-    }
-    this.save();
-  },
-
-  toggleClassName: function(el, className) {
-    if (el.className.indexOf(className) === -1) {
-      this.addClassName(el, className);
+  moveUp: function(ev) {
+    var listItem;
+    if ($.isFunction(ev.preventDefault)){
+      ev.preventDefault();
+      listItem = $(ev.currentTarget).closest('.student');
     }
     else {
-      this.removeClassName(el, className);
+      listItem = ev;
     }
+    if (listItem.prev().length > 0) {
+      listItem.insertBefore(listItem.prev());
+    }
+    this.save();
   },
 
-  addClassName: function(el, className) {
-    el.className += ' ' + className;
-  },
-
-  removeClassName: function(el, className) {
-    el.className = el.className.replace(className, '').trim();
+  moveDown: function(ev) {
+    ev.preventDefault();
+    var listItem = $(ev.currentTarget).closest('.student');
+    if (listItem.next().length > 0) {
+      this.moveUp(listItem.next());
+    }
+    this.save();
   },
 };
 megaRoster.init('#student_list');
