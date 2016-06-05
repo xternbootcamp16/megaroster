@@ -56,6 +56,32 @@ var megaRoster = {
     doc.on('click', '.student .remove', this.removeStudent.bind(this));
     doc.on('click', '.student .cancel', this.toggleEditable.bind(this));
     doc.on('submit', '.student form', this.saveStudent.bind(this));
+
+    this.setupAjax();
+  },
+
+  setupAjax: function() {
+    $('a[data-remote="true"]').on('click', function(ev) {
+      ev.preventDefault();
+      $.ajax({
+        url: $(ev.currentTarget).attr('href'),
+        method: 'get',
+        dataType: 'jsonp',
+        jsonpCallback: "callback",
+        context: this,
+        success: function(data) {
+          this.loadResults(data);
+        }
+      });
+    }.bind(this));
+  },
+
+  loadResults: function(data) {
+    if (data.students) {
+      $.each(data.students, function(index, student) {
+        this.addStudent(student, true);
+      }.bind(this));
+    }
   },
 
   addStudentViaForm: function(ev) {
@@ -69,10 +95,15 @@ var megaRoster = {
     f.studentName.focus();
   },
 
-  addStudent: function(student) {
+  addStudent: function(student, append) {
     var listItem = this.buildListItem(student);
     this.incrementCounter(student.id);
-    this.studentList.prepend(listItem);
+    if (append) {
+      this.studentList.append(listItem)
+    }
+    else {
+      this.studentList.prepend(listItem);
+    }
     this.save();
   },
 
