@@ -5,10 +5,14 @@ var megaRoster = {
   max: 0,
 
   init: function(listSelector) {
-    this.studentList = document.querySelector(listSelector);
+    this.setupList(listSelector);
     this.setupTemplates();
     this.setupEventListeners();
     this.load();
+  },
+
+  setupList: function(selector) {
+    this.studentList = document.querySelector(selector);
   },
 
   load: function() {
@@ -36,6 +40,7 @@ var megaRoster = {
 
   setupTemplates: function() {
     this.studentItemTemplate = this.studentList.querySelector('.student.template');
+    this.removeClassName(this.studentItemTemplate, 'template');
     this.studentItemTemplate.remove();
   },
 
