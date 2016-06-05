@@ -11,9 +11,6 @@ var megaRoster = {
   setupTemplates: function() {
     this.studentItemTemplate = this.studentList.querySelector('.student.template');
     this.studentItemTemplate.remove();
-
-    this.formGroupTemplate = document.querySelector('.input-group.template');
-    this.formGroupTemplate.remove();
   },
 
   setupEventListeners: function() {
@@ -49,48 +46,42 @@ var megaRoster = {
   },
 
   activateLinks: function(listItem) {
-    listItem.querySelector('a.edit').onclick = function() {
-      this.toggleEditable(listItem);
-    }.bind(this);
-    listItem.querySelector('a.promote').onclick = function() {
-      this.promote(listItem);
-    }.bind(this);
-    listItem.querySelector('a.move-up').onclick = function() {
-      this.moveUp(listItem);
-    }.bind(this);
-    listItem.querySelector('a.move-down').onclick = function() {
-      this.moveDown(listItem);
-    }.bind(this);
+    listItem.querySelector('a.edit').onclick = this.toggleEditable.bind(this, listItem, false);
+    listItem.querySelector('a.promote').onclick = this.promote.bind(this, listItem, false);
+    listItem.querySelector('a.move-up').onclick = this.moveUp.bind(this, listItem, false);
+    listItem.querySelector('a.move-down').onclick = this.moveDown.bind(this, listItem, false);
     listItem.querySelector('a.remove').onclick = function() {
       listItem.remove();
     }.bind(this);
+    
+    listItem.querySelector('form').onsubmit = this.saveStudent.bind(this, listItem, false);
+    listItem.querySelector('button.cancel').onclick = this.toggleEditable.bind(this, listItem, false);
+  },
+
+  saveStudent: function(listItem) {
+    var studentName = listItem.querySelector('form').studentName.value;
+    this.toggleEditable(listItem);
+    listItem.querySelector('.editable').innerText = studentName;
   },
 
   toggleEditable: function(listItem) {
     var el = listItem.querySelector('.editable');
     var actions = listItem.querySelector('.actions');
-    var group, saveButton;
-    if (el.isContentEditable) {
-      group = listItem.querySelector('.input-group');
-      group.remove();
-      this.removeClassName(el, 'input-group-field');
-      this.prependChild(listItem, el);
-      this.removeClassName(actions, 'hide');
-      el.contentEditable = 'false';
+    var editForm = listItem.querySelector('form');
+    if (editForm.className.indexOf('hide') >= 0) {
+      console.log('showing');
+      editForm.studentName.value = el.innerText;
+      this.addClassName(el, 'hide');
+      this.addClassName(actions, 'hide');
+      this.removeClassName(editForm, 'hide');
+      editForm.studentName.focus();
+      editForm.studentName.select();
     }
     else {
-      group = this.formGroupTemplate.cloneNode(true);
-      saveButton = group.querySelector('.button.success');
-      saveButton.onclick = function() {
-        this.toggleEditable(listItem);
-      }.bind(this);
-      this.addClassName(actions, 'hide');
-      this.addClassName(el, 'input-group-field');
-      this.prependChild(group, el);
-      listItem.appendChild(group);
-      this.removeClassName(group, 'hide');
-      el.contentEditable = 'true';
-      el.focus();
+      console.log('hiding');
+      this.addClassName(editForm, 'hide')
+      this.removeClassName(el, 'hide');
+      this.removeClassName(actions, 'hide');
     }
   },
 

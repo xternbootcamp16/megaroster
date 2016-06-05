@@ -42,7 +42,7 @@ span.student-name {
   padding: 1px;
 }
 
-span[contenteditable=true] {
+.student input[name=studentName] {
   border: 1px solid #ccc;
   line-height: inherit;
   padding: 0;
