@@ -1,13 +1,14 @@
 $(document).foundation()
 
 var megaRoster = {
+  students: [],
+  max: 0,
+
   init: function(listSelector) {
     this.studentList = document.querySelector(listSelector);
     this.setupTemplates();
     this.setupEventListeners();
-    this.students = [];
     this.load();
-    this.max = 0;
   },
 
   load: function() {
@@ -64,8 +65,14 @@ var megaRoster = {
       this.students.unshift(student);
       this.prependChild(this.studentList, listItem);
     }
-    this.max ++;
+    this.incrementCounter(student.id);
     this.save();
+  },
+
+  incrementCounter: function(id) {
+    if (id > this.max) {
+      this.max = id;
+    }
   },
 
   prependChild: function(parent, child) {
