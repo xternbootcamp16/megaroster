@@ -95,7 +95,12 @@ var megaRoster = {
   },
 
   promote: function(listItem) {
-    this.prependChild(this.studentList, listItem);
+    if (listItem.className.indexOf('promoted') === -1) {
+      listItem.className += ' promoted'
+    }
+    else {
+      listItem.className = listItem.className.replace('promoted', '').trim();
+    }
   },
 
   moveUp: function(listItem) {
