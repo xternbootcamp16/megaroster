@@ -42,7 +42,7 @@ var megaRoster = {
   buildListItem: function(studentName) {
     var listItem = this.studentItemTemplate.cloneNode(true);
     listItem.querySelector('.student-name').innerText = studentName;
-    listItem.className = listItem.className.replace('hide', '').trim();
+    this.removeClassName(listItem, 'hide');
     this.activateLinks(listItem);
 
     return listItem;
@@ -73,10 +73,10 @@ var megaRoster = {
     if (el.isContentEditable) {
       group = listItem.querySelector('.input-group');
       group.remove();
-      el.className = el.className.replace('input-group-field', '').trim();
+      this.removeClassName(el, 'input-group-field');
       this.prependChild(listItem, el);
+      this.removeClassName(actions, 'hide');
       el.contentEditable = 'false';
-      actions.className = actions.className.replace('hide', '').trim();
     }
     else {
       group = this.formGroupTemplate.cloneNode(true);
@@ -84,23 +84,18 @@ var megaRoster = {
       saveButton.onclick = function() {
         this.toggleEditable(listItem);
       }.bind(this);
-      actions.className += ' hide';
-      el.className += ' input-group-field';
+      this.addClassName(actions, 'hide');
+      this.addClassName(el, 'input-group-field');
       this.prependChild(group, el);
       listItem.appendChild(group);
-      group.className = group.className.replace('hide', '').trim();
+      this.removeClassName(group, 'hide');
       el.contentEditable = 'true';
       el.focus();
     }
   },
 
   promote: function(listItem) {
-    if (listItem.className.indexOf('promoted') === -1) {
-      listItem.className += ' promoted'
-    }
-    else {
-      listItem.className = listItem.className.replace('promoted', '').trim();
-    }
+    this.toggleClassName(listItem, 'promoted');
   },
 
   moveUp: function(listItem) {
@@ -114,6 +109,23 @@ var megaRoster = {
     if (listItem !== this.studentList.lastElementChild) {
       this.moveUp(listItem.nextElementSibling);
     }
+  },
+
+  toggleClassName: function(el, className) {
+    if (el.className.indexOf(className) === -1) {
+      this.addClassName(el, className);
+    }
+    else {
+      this.removeClassName(el, className);
+    }
+  },
+
+  addClassName: function(el, className) {
+    el.className += ' ' + className;
+  },
+
+  removeClassName: function(el, className) {
+    el.className = el.className.replace(className, '').trim();
   },
 };
 megaRoster.init('#student_list');
