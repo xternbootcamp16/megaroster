@@ -31,7 +31,7 @@ $.extend(megaRoster, {
   loadMutants: function(data) {
     $.each(data, function(i, mutant) {
       this.addStudent({
-        name: mutant.mutant_name + ' (' + mutant.power + ')',
+        name: mutant.mutant_name,
         id: mutant.id
       });
     }.bind(this));
