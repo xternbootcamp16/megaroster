@@ -171,9 +171,10 @@ var megaRoster = {
     if (ev) { ev.preventDefault(); }
     var student = this.findStudentFromItem(listItem);
     var oldIndex = this.students.indexOf(student);
-    this.students.splice(oldIndex - 1, 0, this.students.splice(oldIndex, 1)[0]);
+    var previousItem;
     if (listItem !== this.studentList.firstElementChild) {
-      var previousItem = listItem.previousElementSibling;
+      this.students.splice(oldIndex - 1, 0, this.students.splice(oldIndex, 1)[0]);
+      previousItem = listItem.previousElementSibling;
       this.studentList.insertBefore(listItem, previousItem);
     }
     this.save();
