@@ -59,10 +59,10 @@ var megaRoster = {
     f.studentName.focus();
   },
 
-  addStudent: function(student, addToEnd) {
+  addStudent: function(student, append) {
     var listItem = this.buildListItem(student);
 
-    if (addToEnd) {
+    if (append) {
       this.students.push(student);
       this.studentList.appendChild(listItem);
     }
