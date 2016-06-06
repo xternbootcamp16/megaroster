@@ -7,6 +7,7 @@
     <title>MegaRoster!</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/prism.css">
     <link rel="stylesheet" href="css/app.css">
     <style media="screen">
       .example { border: 1px solid #ccc;
@@ -37,25 +38,26 @@
           <p>
             <strong>HTML</strong>
           </p>
-          <pre>
-  &lt;form id=&quot;student_form&quot;&gt;
+
+          <pre><code class="language-html"
+  >&lt;form id=&quot;student_form&quot;&gt;
     &lt;div class=&quot;input-group&quot;&gt;
       &lt;input type=&quot;text&quot; class=&quot;input-group-field&quot; placeholder=&quot;Enter student name&quot;&gt;
       &lt;div class=&quot;input-group-button&quot;&gt;
         &lt;button type=&quot;submit&quot; class=&quot;success button expanded&quot;&gt;Add Student&lt;/button&gt;
       &lt;/div&gt;
    &lt;/div&gt;
-  &lt;/form&gt;
-          </pre>
+  &lt;/form&gt;</code></pre>
 
           <p>
             <strong>CSS</strong>
           </p>
-          <pre>
-  #student_form &gt; div {
-    padding: 0;
-  }
-          </pre>
+          <pre><code class="language-css"
+>#student_form &gt; div {
+  padding: 0;
+}</code></pre>
+
+
         </div>
       </div>
     </div>
@@ -76,9 +78,11 @@
               </span>
             </li>
           </ul>
+
+
           <p><strong>HTML</strong></p>
-          <pre>
-&lt;ul class=&quot;no-bullet&quot;&gt;
+          <pre><code class="language-html"
+>&lt;ul class=&quot;no-bullet&quot;&gt;
   &lt;h4&gt;List item with hover effects&lt;/h4&gt;
   &lt;li class=&quot;student clearfix&quot;&gt;
     &lt;span class=&quot;student-name editable&quot;&gt;Name Goes Here&lt;/span&gt;
@@ -90,11 +94,12 @@
       &lt;a href=&quot;#&quot; class=&quot;remove alert button&quot;&gt;&lt;i class=&quot;fa fa-trash-o&quot;&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;/span&gt;
   &lt;/li&gt;
-&lt;/ul&gt;
-          </pre>
+&lt;/ul&gt;</code></pre>
+
+
           <p><strong>CSS</strong></p>
-          <pre>
-.actions {
+          <pre><code class="language-css"
+>.actions {
   float: right;
   transition: 0.3s;
   opacity: 0;
@@ -117,8 +122,8 @@
 
 .student:hover .actions {
   opacity: 1;
-}
-          </pre>
+}</code></pre>
+
         </div>
 
 
@@ -138,9 +143,10 @@
             </li>
           </ul>
 
+
           <p><strong>HTML</strong></p>
-          <pre>
-&lt;ul class=&quot;no-bullet&quot;&gt;
+          <pre><code class="language-html"
+>&lt;ul class=&quot;no-bullet&quot;&gt;
 &lt;h4&gt;List item with inline form with input group&lt;/h4&gt;
 &lt;li class=&quot;student clearfix&quot;&gt;
   &lt;form class=&quot;edit-form&quot;&gt;
@@ -153,12 +159,11 @@
     &lt;/div&gt;
   &lt;/form&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-          </pre>
+&lt;/ul&gt;</code></pre>
 
           <p><strong>CSS</strong></p>
-          <pre>
-.student .input-group {
+          <pre><code class="language-css"
+>.student .input-group {
   margin-bottom: 0;
 }
 
@@ -170,12 +175,13 @@ span.student-name {
 .student input[name=studentName] {
   line-height: inherit;
   padding: 0 0 0 8px;
-}
-          </pre>
+}</code></pre>
         </div>
 
 
       </div>
     </div>
+
+    <script src="js/vendor/prism.js"></script>
   </body>
 </html>
