@@ -38,12 +38,11 @@
 }
 
 span.student-name {
-  line-height: 38px;
-  padding: 1px;
+  line-height: 40px;
+  padding: 1px 1px 1px 9px;
 }
 
 .student input[name=studentName] {
-  border: 1px solid #ccc;
   line-height: inherit;
-  padding: 0;
+  padding: 0 0 0 8px;
 }

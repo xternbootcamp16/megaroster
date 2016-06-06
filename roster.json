@@ -1,0 +1,104 @@
+callback({
+  "students": [
+    {
+      "name": "Alex Aralis",
+      "id": 1
+    },
+    {
+      "name": "Alex Cannon",
+        "id": 2
+    },
+    {
+      "name": "Ariel Marbly",
+        "id": 3
+    },
+    {
+      "name": "Cameron Grundy",
+        "id": 4
+    },
+    {
+      "name": "Charles Roth",
+        "id": 5
+    },
+    {
+      "name": "Edward Ly",
+        "id": 6
+    },
+    {
+      "name": "Jennifer Simbartl",
+        "id": 7
+    },
+    {
+      "name": "Jon Abdulloev",
+        "id": 8
+    },
+    {
+      "name": "Jordan Tompkins",
+        "id": 9
+    },
+    {
+      "name": "Josh Gould",
+        "id": 10
+    },
+    {
+      "name": "Justin Copeland",
+        "id": 11
+    },
+    {
+      "name": "Katelyn Cabico",
+        "id": 12
+    },
+    {
+      "name": "Kenneth Tam",
+        "id": 13
+    },
+    {
+      "name": "Kush Patel",
+        "id": 14
+    },
+    {
+      "name": "Leo Welter",
+        "id": 15
+    },
+    {
+      "name": "Matheu DeWitt",
+        "id": 16
+    },
+    {
+      "name": "Matthew Neal",
+        "id": 17
+    },
+    {
+      "name": "Michael Ketiku",
+        "id": 18
+    },
+    {
+      "name": "Michael Reed",
+        "id": 19
+    },
+    {
+      "name": "Mitchell Klich",
+        "id": 20
+    },
+    {
+      "name": "Nathan Peterson",
+        "id": 21
+    },
+    {
+      "name": "Oluwasogo Akinyosoye",
+        "id": 22
+    },
+    {
+      "name": "Patricia Chun",
+        "id": 23
+    },
+    {
+      "name": "Thomas Worns",
+        "id": 24
+    },
+    {
+      "name": "Zachary Millikan",
+      "id": 25
+    }
+  ]
+})

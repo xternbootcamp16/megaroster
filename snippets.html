@@ -1,0 +1,187 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaRoster!</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/app.css">
+    <style media="screen">
+      .example { border: 1px solid #ccc;
+                 padding: 1rem;
+                 margin-bottom: 2rem; }
+      pre { border: 1px solid #ccc;
+            background-color: #eee;
+            margin-bottom: 1rem;
+            padding: 0.25rem; }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div class="medium-offset-1 medium-10 columns">
+        <h2>MegaRoster Snippets</h2>
+
+        <div class="example">
+          <h4>Form with an input group</h4>
+          <form id="student_form">
+            <div class="input-group">
+              <input type="text" class="input-group-field" placeholder="Enter student name">
+              <div class="input-group-button">
+                <button type="submit" class="success button expanded">Add Student</button>
+              </div>
+           </div>
+          </form>
+
+          <p>
+            <strong>HTML</strong>
+          </p>
+
+          <pre><code class="language-html"
+  >&lt;form id=&quot;student_form&quot;&gt;
+    &lt;div class=&quot;input-group&quot;&gt;
+      &lt;input type=&quot;text&quot; class=&quot;input-group-field&quot; placeholder=&quot;Enter student name&quot;&gt;
+      &lt;div class=&quot;input-group-button&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;success button expanded&quot;&gt;Add Student&lt;/button&gt;
+      &lt;/div&gt;
+   &lt;/div&gt;
+  &lt;/form&gt;</code></pre>
+
+          <p>
+            <strong>CSS</strong>
+          </p>
+          <pre><code class="language-css"
+>#student_form &gt; div {
+  padding: 0;
+}</code></pre>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="medium-offset-1 medium-10 columns">
+        <div class="example">
+          <ul class="no-bullet">
+            <h4>List item with hover effects</h4>
+            <li class="student clearfix">
+              <span class="student-name editable">Name Goes Here</span>
+              <span class="actions expanded button-group">
+                <a href="#" class="edit button"><i class="fa fa-pencil"></i></a>
+                <a href="#" class="promote warning button"><i class="fa fa-star"></i></a>
+                <a href="#" class="move-up button"><i class="fa fa-arrow-up"></i></a>
+                <a href="#" class="move-down button"><i class="fa fa-arrow-down"></i></a>
+                <a href="#" class="remove alert button"><i class="fa fa-trash-o"></i></a>
+              </span>
+            </li>
+          </ul>
+
+
+          <p><strong>HTML</strong></p>
+          <pre><code class="language-html"
+>&lt;ul class=&quot;no-bullet&quot;&gt;
+  &lt;h4&gt;List item with hover effects&lt;/h4&gt;
+  &lt;li class=&quot;student clearfix&quot;&gt;
+    &lt;span class=&quot;student-name editable&quot;&gt;Name Goes Here&lt;/span&gt;
+    &lt;span class=&quot;actions expanded button-group&quot;&gt;
+      &lt;a href=&quot;#&quot; class=&quot;edit button&quot;&gt;&lt;i class=&quot;fa fa-pencil&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a href=&quot;#&quot; class=&quot;promote warning button&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a href=&quot;#&quot; class=&quot;move-up button&quot;&gt;&lt;i class=&quot;fa fa-arrow-up&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a href=&quot;#&quot; class=&quot;move-down button&quot;&gt;&lt;i class=&quot;fa fa-arrow-down&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a href=&quot;#&quot; class=&quot;remove alert button&quot;&gt;&lt;i class=&quot;fa fa-trash-o&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+
+          <p><strong>CSS</strong></p>
+          <pre><code class="language-css"
+>.actions {
+  float: right;
+  transition: 0.3s;
+  opacity: 0;
+  margin-bottom: 0;
+}
+
+.student {
+  border: 1px solid #ddd;
+  height: 4rem;
+  padding: .75rem 1.25rem;
+  margin-bottom: -1px;
+  transition: 0.15s;
+}
+.student:first-child a.move-up,
+.student:last-child a.move-down {
+  background-color: #ddd;
+  color: #eee;
+  cursor: not-allowed;
+}
+
+.student:hover .actions {
+  opacity: 1;
+}</code></pre>
+
+        </div>
+
+
+        <div class="example">
+          <ul class="no-bullet">
+            <h4>List item with inline form with input group</h4>
+            <li class="student clearfix">
+              <form class="edit-form">
+                <div class="input-group">
+                  <input type="text" name="studentName" class="input-group-field" placeholder="Name Goes Here">
+                  <div class="input-group-button">
+                    <button type="submit" class="success button"><i class="fa fa-check"></i></button
+                    ><button type="button" class="alert cancel button"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+              </form>
+            </li>
+          </ul>
+
+
+          <p><strong>HTML</strong></p>
+          <pre><code class="language-html"
+>&lt;ul class=&quot;no-bullet&quot;&gt;
+&lt;h4&gt;List item with inline form with input group&lt;/h4&gt;
+&lt;li class=&quot;student clearfix&quot;&gt;
+  &lt;form class=&quot;edit-form&quot;&gt;
+    &lt;div class=&quot;input-group&quot;&gt;
+      &lt;input type=&quot;text&quot; name=&quot;studentName&quot; class=&quot;input-group-field&quot; placeholder=&quot;Name Goes Here&quot;&gt;
+      &lt;div class=&quot;input-group-button&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;success button&quot;&gt;&lt;i class=&quot;fa fa-check&quot;&gt;&lt;/i&gt;&lt;/button
+        &gt;&lt;button type=&quot;button&quot; class=&quot;alert cancel button&quot;&gt;&lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+          <p><strong>CSS</strong></p>
+          <pre><code class="language-css"
+>.student .input-group {
+  margin-bottom: 0;
+}
+
+span.student-name {
+  line-height: 40px;
+  padding: 1px 1px 1px 9px;
+}
+
+.student input[name=studentName] {
+  line-height: inherit;
+  padding: 0 0 0 8px;
+}</code></pre>
+        </div>
+
+
+      </div>
+    </div>
+
+    <script src="js/vendor/prism.js"></script>
+  </body>
+</html>
