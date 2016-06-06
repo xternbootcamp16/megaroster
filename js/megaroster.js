@@ -56,6 +56,7 @@ var megaRoster = {
     doc.on('submit', '.student form', this.saveStudent.bind(this));
 
     this.setupAjax();
+    this.setupMutantAjax();
   },
 
   addStudentViaForm: function(ev) {
