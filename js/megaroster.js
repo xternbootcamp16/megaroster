@@ -57,6 +57,11 @@ var megaRoster = {
 
     this.setupAjax();
     this.setupMutantAjax();
+    $('.ajax-buttons .alert').on('click', function(ev) {
+      ev.preventDefault();
+      localStorage.clear();
+      this.studentList.empty();
+    }.bind(this));
   },
 
   addStudentViaForm: function(ev) {
